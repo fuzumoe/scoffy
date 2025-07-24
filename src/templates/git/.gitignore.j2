@@ -1,0 +1,213 @@
+ # Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+test-results/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Environment variables
+{% if environment_files %}
+{% for env_file in environment_files %}
+{{ env_file }}
+{% endfor %}
+{% else %}
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+.env.staging
+{% endif %}
+
+# FastAPI specific
+{% if use_uploads %}
+{{ upload_dir | default('uploads/') }}
+{% endif %}
+{{ static_dir | default('static/') }}
+{{ media_dir | default('media/') }}
+
+# Database files
+{% if database_type == 'sqlite' %}
+*.db
+*.sqlite
+*.sqlite3
+{{ db_name | default('fastapi.db') }}
+{% endif %}
+
+# Database migrations (if using Alembic)
+{% if use_alembic %}
+# Keep alembic directory but ignore revision files in development
+# alembic/versions/*.py
+{% endif %}
+
+# Logs
+logs/
+*.log
+{{ log_file | default('app.log') }}
+{{ error_log | default('error.log') }}
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Documentation
+docs/_build/
+site/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Ruff
+.ruff_cache/
+
+# Docker
+{% if use_docker %}
+.dockerignore
+# docker-compose.override.yml  # Uncomment if you use override files
+{% endif %}
+
+# Security
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+credentials/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Local development
+local_settings.py
+.local/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Celery
+{% if use_celery %}
+celerybeat-schedule
+celerybeat.pid
+{% endif %}
+
+# Redis dump file
+{% if use_redis %}
+dump.rdb
+{% endif %}
+
+# Node.js (if using frontend tools)
+{% if use_frontend %}
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+{% endif %}
+
+# Application specific
+{% if custom_ignores %}
+{% for ignore in custom_ignores %}
+{{ ignore }}
+{% endfor %}
+{% endif %}
+
+# Keep empty directories
+!.gitkeep

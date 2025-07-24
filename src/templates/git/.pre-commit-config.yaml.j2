@@ -1,0 +1,114 @@
+repos:
+  # Ruff - Linting and Formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v{{ ruff_version | default('0.1.8') }}
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --config, /dev/null]
+      - id: ruff-format
+        args: [--config, /dev/null]
+      - id: ruff-format
+        name: Ruff Formatting
+        types_or: [python, pyi]
+
+{% if use_mypy %}
+  # MyPy - Type Checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v{{ mypy_version | default('1.7.1') }}
+    hooks:
+      - id: mypy
+        name: MyPy Type Checking
+        additional_dependencies: [types-requests, types-PyYAML]
+        args: [--config-file=pyproject.toml]
+        types: [python]
+{% endif %}
+
+  # Security Checks
+  - repo: https://github.com/PyCQA/bandit
+    rev: {{ bandit_version | default('1.7.5') }}
+    hooks:
+      - id: bandit
+        name: Security Linting (Bandit)
+        args: [-c, pyproject.toml]
+        types: [python]
+
+  # Python-specific Checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v{{ precommit_hooks_version | default('4.5.0') }}
+    hooks:
+      - id: check-ast
+        name: Check Python AST
+      - id: check-builtin-literals
+        name: Check Builtin Literals
+      - id: check-case-conflict
+        name: Check Case Conflicts
+      - id: check-docstring-first
+        name: Check Docstring First
+      - id: check-merge-conflict
+        name: Check Merge Conflicts
+      - id: check-yaml
+        name: Check YAML Syntax
+      - id: check-toml
+        name: Check TOML Syntax
+      - id: check-json
+        name: Check JSON Syntax
+      - id: end-of-file-fixer
+        name: Fix End of Files
+      - id: trailing-whitespace
+        name: Trim Trailing Whitespace
+      - id: mixed-line-ending
+        name: Fix Mixed Line Endings
+
+  # Requirements Safety Check
+  - repo: https://github.com/pyupio/safety
+    rev: {{ safety_version | default('2.3.5') }}
+    hooks:
+      - id: safety
+        name: Safety Check Dependencies
+        args: [--json]
+
+  # Local Hooks for FastAPI
+  - repo: local
+    hooks:
+      - id: pytest-unit
+        name: Run Unit Tests
+        entry: {{ test_runner | default('pytest') }}
+        args:
+          - tests/unit/
+          - --maxfail={{ max_test_failures | default('3') }}
+          - --disable-warnings
+          - -v
+          - -m
+          - "unit"
+{% if generate_coverage %}
+          - --cov=app
+          - --cov-report=term-missing
+          - --cov-fail-under={{ min_coverage | default('80') }}
+{% endif %}
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: pytest-integration
+        name: Run Integration Tests
+        entry: {{ test_runner | default('pytest') }}
+        args:
+          - tests/integration/
+          - --maxfail={{ max_integration_failures | default('1') }}
+          - -v
+          - -m
+          - "integration"
+        language: system
+        pass_filenames: false
+        types: [python]
+        stages: [manual]  # Only run manually
+
+
+
+# Configuration
+default_language_version:
+  python: python{{ python_version | default('3.12') }}
+
+# Global settings
+fail_fast: {{ fail_fast | default('false') }}
+default_stages: [commit]
