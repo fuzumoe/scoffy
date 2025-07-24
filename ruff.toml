@@ -1,13 +1,8 @@
 # Ruff configuration file
 # This file provides additional Ruff configuration beyond pyproject.toml
-
-# You can override specific settings here if needed
-# For example, to exclude additional files or adjust rules per directory
-
+ 
 # Extend pyproject.toml configuration
 extend = "pyproject.toml"
-
- 
 
 # Basic settings
 target-version = "py311"
