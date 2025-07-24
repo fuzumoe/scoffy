@@ -1,30 +1,21 @@
 {
     "recommendations": [
-        // Core Python Development
         "ms-python.python",
         "ms-python.debugpy",
         "ms-python.pylint",
         "ms-toolsai.jupyter",
-
-        // Code Quality & Formatting
         "charliermarsh.ruff",
 {% if use_mypy %}
         "ms-python.mypy-type-checker",
 {% endif %}
         "ms-python.autopep8",
-
-        // FastAPI Specific
         "ms-python.python",
         "ms-toolsai.jupyter-keymap",
         "ms-toolsai.jupyter-renderers",
-
-        // Template Engines
         "wholroyd.jinja",
         "samuelcolvin.jinjahtml",
         "formulahendry.auto-rename-tag",
         "formulahendry.auto-close-tag",
-
-        // Database Management
 {% if database_type == 'postgresql' or database_type == 'relational' %}
         "cweijan.vscode-postgresql-client2",
         "mtxr.sqltools",
@@ -37,87 +28,52 @@
         "mongodb.mongodb-vscode",
         "humao.rest-client",
 {% endif %}
-
-        // API Development & Testing
         "humao.rest-client",
         "42crunch.vscode-openapi",
         "swagger-viewer",
         "redhat.vscode-yaml",
-
-        // Docker & Containers
         "ms-azuretools.vscode-docker",
         "ms-vscode-remote.remote-containers",
         "ms-vscode-remote.remote-ssh",
-
-        // Environment & Configuration
         "mikestead.dotenv",
         "tamasfe.even-better-toml",
         "redhat.vscode-yaml",
         "ms-vscode.vscode-json",
-
-        // Web Development (for API docs/frontend)
         "ecmel.vscode-html-css",
         "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
-
-        // Git & Version Control
         "eamodio.gitlens",
         "donjayamanne.githistory",
         "github.vscode-pull-request-github",
-
-        // Terminal & Shell
         "ms-vscode.powershell",
         "timonwong.shellcheck",
-
-        // Productivity & UI
         "pkief.material-icon-theme",
         "zhuangtongfa.material-theme",
         "streetsidesoftware.code-spell-checker",
         "gruntfuggly.todo-tree",
         "alefragnani.bookmarks",
-
-        // Documentation
         "yzhang.markdown-all-in-one",
         "davidanson.vscode-markdownlint",
         "bierner.markdown-mermaid",
-
-        // Testing
         "littlefoxteam.vscode-python-test-adapter",
         "hbenl.vscode-test-explorer",
-
-        // Performance & Monitoring
         "ms-vscode.vscode-github-issue-notebooks",
-
-        // Security
         "snyk-security.snyk-vulnerability-scanner",
 
 {% if use_redis %}
-        // Redis Tools
         "cweijan.vscode-redis-client",
 
 {% endif %}
 {% if use_celery %}
-        // Task Queue Monitoring
         "ms-python.python",
 
 {% endif %}
-        // Keybindings (Optional)
         "ms-vscode.sublime-keybindings",
-
-        // Language Support
         "ms-vscode.vscode-typescript-next",
-
-        // File Management
         "sleistner.vscode-fileutils",
-
-        // Debugging Enhanced
         "ms-vscode.vscode-js-debug",
-
-        // REST API Client
         "rangav.vscode-thunder-client"
     ],
-
-    // Optional: Unwanted extensions (to prevent installation)
     "unwantedRecommendations": [
         "ms-python.flake8",
         "ms-python.black-formatter",
