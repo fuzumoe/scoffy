@@ -1,1 +1,1 @@
-# Test commit message validation
+# Another test
