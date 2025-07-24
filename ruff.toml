@@ -1,6 +1,6 @@
 # Ruff configuration file
 # This file provides additional Ruff configuration beyond pyproject.toml
- 
+
 # Extend pyproject.toml configuration
 extend = "pyproject.toml"
 
@@ -74,7 +74,7 @@ ignore = [
     "RET504", # Unnecessary variable assignment before return statement
     "RET505", # Unnecessary else after return statement
     "RET506", # Unnecessary else after raise statement
- 
+
     # Note: E1101 Instance of 'Style' has no 'SUCCESS', not a Ruff code
     # Note: C0114 is a Pylint code (missing-module-docstring), not a Ruff code
     # Ruff equivalent would be D100 from pydocstyle

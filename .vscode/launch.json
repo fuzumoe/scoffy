@@ -11,7 +11,7 @@
         {
             "name": "Ruff Format",
             "type": "node-terminal",
-            "request": "launch", 
+            "request": "launch",
             "command": "${workspaceFolder}/.venv/bin/ruff format ${workspaceFolder}",
             "cwd": "${workspaceFolder}"
         },
@@ -62,6 +62,13 @@
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "justMyCode": false
+        },
+        {
+            "name": "Pre-commit Run All",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "pre-commit run --all-files",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

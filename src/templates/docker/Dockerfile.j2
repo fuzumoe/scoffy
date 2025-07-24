@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get install -y build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-    
+
 # install uv itself
 RUN pip install --upgrade pip uv
 
@@ -31,4 +31,3 @@ EXPOSE {{ expose_port }}
 
 # Command to run the app using uvicorn
 CMD ["uvicorn", "{{ app_module }}:app", "--host", "0.0.0.0", "--port", "{{ expose_port }}"]
- 
