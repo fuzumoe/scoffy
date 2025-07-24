@@ -1,0 +1,303 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🚀 FastAPI: Debug Server",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "{{ app_module | default('main') }}:app",
+                "--host",
+                "{{ host | default('127.0.0.1') }}",
+                "--port",
+                "{{ app_port | default('8000') }}",
+                "--reload"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "APP_NAME": "{{ app_name | default('FastAPI Application') }}",
+                "DEBUG": "{{ debug | default('True') }}",
+                "ENVIRONMENT": "development"
+{% if database_type == 'postgresql' or database_type == 'relational' %}
+                ,"DATABASE_URL": "postgresql://{{ db_user | default('postgres') }}:{{ db_password | default('password') }}@localhost:{{ db_port | default('5432') }}/{{ db_name | default('fastapi_db') }}"
+{% elif database_type == 'mysql' %}
+                ,"DATABASE_URL": "mysql+pymysql://{{ db_user | default('root') }}:{{ db_password | default('password') }}@localhost:{{ db_port | default('3306') }}/{{ db_name | default('fastapi_db') }}"
+{% elif database_type == 'mongodb' or database_type == 'document' %}
+                ,"MONGODB_URL": "mongodb://{{ mongo_user | default('admin') }}:{{ mongo_password | default('password') }}@localhost:{{ mongo_port | default('27017') }}/{{ mongo_db_name | default('fastapi_db') }}?authSource=admin"
+{% endif %}
+{% if use_redis %}
+                ,"REDIS_URL": "redis://localhost:{{ redis_port | default('6379') }}/0"
+{% endif %}
+            }
+        },
+        {
+            "name": "🧪 Debug All Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests/",
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "ENVIRONMENT": "testing"
+{% if database_type == 'sqlite' or environment == 'testing' %}
+                ,"DATABASE_URL": "sqlite:///./test.db"
+{% endif %}
+            }
+        },
+        {
+            "name": "🧪 Debug Unit Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests/unit/",
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🧪 Debug Integration Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests/integration/",
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Docker: Start Services"
+        },
+        {
+            "name": "🔍 FastAPI: Test Coverage",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "--cov=app",
+                "--cov-report=html",
+                "--cov-report=term",
+                "tests/"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "cwd": "${workspaceFolder}"
+        },
+{% if database_type == 'postgresql' or database_type == 'relational' %}
+        {
+            "name": "🐘 PostgreSQL: Start Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "-d",
+                "postgres"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🐘 PostgreSQL: Stop Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "down",
+                "postgres"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+{% elif database_type == 'mysql' %}
+        {
+            "name": "🐬 MySQL: Start Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "-d",
+                "mysql"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🐬 MySQL: Stop Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "down",
+                "mysql"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+{% elif database_type == 'mongodb' or database_type == 'document' %}
+        {
+            "name": "🍃 MongoDB: Start Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "-d",
+                "mongodb"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🍃 MongoDB: Stop Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "down",
+                "mongodb"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+{% endif %}
+{% if use_redis %}
+        {
+            "name": "🔴 Redis: Start Cache",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "-d",
+                "redis"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🔴 Redis: Stop Cache",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "down",
+                "redis"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+{% endif %}
+        {
+            "name": "🐳 Docker: Start All Services",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "-d"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🐳 Docker: Stop All Services",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "down"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🐳 Docker: Rebuild & Start",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "up",
+                "--build",
+                "-d"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "📋 Docker: View Logs",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/bin/docker",
+            "args": [
+                "compose",
+                "logs",
+                "-f"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "🚀 FastAPI: Production Mode",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "gunicorn",
+            "args": [
+                "{{ app_module | default('main') }}:app",
+                "-w",
+                "{{ workers | default('4') }}",
+                "-k",
+                "uvicorn.workers.UvicornWorker",
+                "--bind",
+                "0.0.0.0:{{ app_port | default('8000') }}"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "ENVIRONMENT": "production",
+                "DEBUG": "False"
+            }
+        },
+        {
+            "name": "📝 Code Quality: Lint & Format",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "ruff",
+            "args": [
+                "check",
+                ".",
+                "--fix"
+            ],
+            "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/bin/python",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.pylint",
+        "ms-toolsai.jupyter",
+
+        "charliermarsh.ruff",
+{% if use_mypy %}
+        "ms-python.mypy-type-checker",
+{% endif %}
+        "ms-python.autopep8",
+
+        "ms-python.python",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+
+        "wholroyd.jinja",
+        "samuelcolvin.jinjahtml",
+        "formulahendry.auto-rename-tag",
+        "formulahendry.auto-close-tag",
+
+{% if database_type == 'postgresql' or database_type == 'relational' %}
+        "cweijan.vscode-postgresql-client2",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+{% elif database_type == 'mysql' %}
+        "cweijan.vscode-mysql-client2",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-mysql",
+{% elif database_type == 'mongodb' or database_type == 'document' %}
+        "mongodb.mongodb-vscode",
+        "humao.rest-client",
+{% endif %}
+
+        "humao.rest-client",
+        "42crunch.vscode-openapi",
+        "swagger-viewer",
+        "redhat.vscode-yaml",
+
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-ssh",
+
+        "mikestead.dotenv",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml",
+        "ms-vscode.vscode-json",
+
+        "ecmel.vscode-html-css",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "github.vscode-pull-request-github",
+
+        "ms-vscode.powershell",
+        "timonwong.shellcheck",
+
+        "pkief.material-icon-theme",
+        "zhuangtongfa.material-theme",
+        "streetsidesoftware.code-spell-checker",
+        "gruntfuggly.todo-tree",
+        "alefragnani.bookmarks",
+
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "bierner.markdown-mermaid",
+
+        "littlefoxteam.vscode-python-test-adapter",
+        "hbenl.vscode-test-explorer",
+
+        "ms-vscode.vscode-github-issue-notebooks",
+
+        "snyk-security.snyk-vulnerability-scanner",
+
+{% if use_redis %}
+        "cweijan.vscode-redis-client",
+
+{% endif %}
+{% if use_celery %}
+        "ms-python.python",
+
+{% endif %}
+        "ms-vscode.sublime-keybindings",
+
+        "ms-vscode.vscode-typescript-next",
+
+        "sleistner.vscode-fileutils",
+
+        "ms-vscode.vscode-js-debug",
+
+        "rangav.vscode-thunder-client"
+    ],
+
+    "unwantedRecommendations": [
+        "ms-python.flake8",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "formulahendry.code-runner"
+    ]
+}

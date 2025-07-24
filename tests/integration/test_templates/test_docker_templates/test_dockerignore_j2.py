@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture
 def dockerignore_template(env):
-    return env.get_template("docker/.dockerignore.j2")
+    return env.get_template(".dockerignore.j2")
 
 
 def test_dockerignore_template_exists(docker_template_dir):
