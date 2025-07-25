@@ -1,21 +1,26 @@
 import logging
+from pathlib import Path
+from typing import Any
 
 import pytest
+from jinja2 import Template
 
 logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def docker_compose_template(env):
+def docker_compose_template(env: Any) -> Any:
     return env.get_template("docker-compose.yml.j2")
 
 
-def test_docker_compose_template_exists(docker_template_dir):
+def test_docker_compose_template_exists(docker_template_dir: Path) -> None:
     """Test that the docker-compose.yml template exists."""
     assert (docker_template_dir / "docker-compose.yml.j2").exists()
 
 
-def test_docker_compose_renders_with_default_values(docker_compose_template):
+def test_docker_compose_renders_with_default_values(
+    docker_compose_template: Template,
+) -> None:
     """Test that the docker-compose.yml template renders with default values."""
     context = {"app_name": "fastapi-app", "app_port": "8000"}
     rendered = docker_compose_template.render(**context)
@@ -26,7 +31,9 @@ def test_docker_compose_renders_with_default_values(docker_compose_template):
     assert "fastapi-network:" in rendered
 
 
-def test_docker_compose_renders_with_postgresql(docker_compose_template):
+def test_docker_compose_renders_with_postgresql(
+    docker_compose_template: Template,
+) -> None:
     """Test that the docker-compose.yml template renders with PostgreSQL."""
     context = {
         "app_name": "my-api",
@@ -45,7 +52,7 @@ def test_docker_compose_renders_with_postgresql(docker_compose_template):
     assert "postgres_data:" in rendered
 
 
-def test_docker_compose_renders_with_mongodb(docker_compose_template):
+def test_docker_compose_renders_with_mongodb(docker_compose_template: Template) -> None:
     """Test that the docker-compose.yml template renders with MongoDB."""
     context = {
         "app_name": "doc-api",
@@ -64,7 +71,7 @@ def test_docker_compose_renders_with_mongodb(docker_compose_template):
     assert "mongodb_data:" in rendered
 
 
-def test_docker_compose_renders_with_redis(docker_compose_template):
+def test_docker_compose_renders_with_redis(docker_compose_template: Template) -> None:
     """Test that the docker-compose.yml template renders with Redis."""
     context = {
         "app_name": "cache-api",
@@ -81,7 +88,7 @@ def test_docker_compose_renders_with_redis(docker_compose_template):
     assert "redis_data:" in rendered
 
 
-def test_docker_compose_renders_with_nginx(docker_compose_template):
+def test_docker_compose_renders_with_nginx(docker_compose_template: Template) -> None:
     """Test that the docker-compose.yml template renders with Nginx."""
     context = {
         "app_name": "web-api",

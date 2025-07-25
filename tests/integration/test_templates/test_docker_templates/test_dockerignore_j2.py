@@ -1,21 +1,24 @@
 import logging
+from pathlib import Path
+from typing import Any
 
 import pytest
+from jinja2 import Template
 
 logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def dockerignore_template(env):
+def dockerignore_template(env: Any) -> Any:
     return env.get_template(".dockerignore.j2")
 
 
-def test_dockerignore_template_exists(docker_template_dir):
+def test_dockerignore_template_exists(docker_template_dir: Path) -> None:
     """Test that the .dockerignore template exists."""
     assert (docker_template_dir / ".dockerignore.j2").exists()
 
 
-def test_dockerignore_renders(dockerignore_template):
+def test_dockerignore_renders(dockerignore_template: Template) -> None:
     """Test that the .dockerignore template renders correctly."""
     rendered = dockerignore_template.render()
 

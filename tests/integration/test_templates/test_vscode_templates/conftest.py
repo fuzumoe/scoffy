@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import pytest
 from jinja2 import Environment, FileSystemLoader
@@ -12,5 +13,5 @@ def vscode_template_dir() -> Path:
 
 
 @pytest.fixture
-def env(vscode_template_dir):
+def env(vscode_template_dir: Path) -> Any:
     return Environment(loader=FileSystemLoader(vscode_template_dir))

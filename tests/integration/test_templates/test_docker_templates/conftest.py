@@ -12,5 +12,5 @@ def docker_template_dir() -> Path:
 
 
 @pytest.fixture
-def env(docker_template_dir):
+def env(docker_template_dir: Path) -> Environment:
     return Environment(loader=FileSystemLoader(docker_template_dir))
