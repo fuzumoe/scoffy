@@ -1,15 +1,14 @@
 import logging
 from pathlib import Path
-from typing import Any
 
 import pytest
-from jinja2 import Template
+from jinja2 import Environment, Template
 
 logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def docker_compose_template(env: Any) -> Any:
+def docker_compose_template(env: Environment) -> Template:
     return env.get_template("docker-compose.yml.j2")
 
 
