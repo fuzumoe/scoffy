@@ -3,13 +3,13 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from jinja2 import Template
+from jinja2 import Environment, Template
 
 logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def extensions_json_template(env: Any) -> Any:
+def extensions_json_template(env: Environment) -> Template:
     return env.get_template("extensions.json.j2")
 
 
