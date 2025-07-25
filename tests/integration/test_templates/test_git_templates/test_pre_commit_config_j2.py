@@ -3,13 +3,13 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from jinja2 import Template
+from jinja2 import Environment, Template
 
 logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
-def pre_commit_template(env: Any) -> Any:
+def pre_commit_template(env: Environment) -> Template:
     """Return the pre-commit config template."""
     return env.get_template(".pre-commit-config.yaml.j2")
 
